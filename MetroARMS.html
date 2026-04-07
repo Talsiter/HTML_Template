@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Metro ARMS Account Creation Guide</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" />
+  <link rel="stylesheet" href="style/gptLight.css" />
+</head>
+<body>
+  <main class="page chatgpt-container">
+    <article class="message assistant card">
+      <div class="content card-body">
+        <h1 class="card-header">Metro ARMS Account Creation Guide</h1>
+
+        <div class="step">
+          <div class="step-title">1. Request User Information</div>
+          <ul class="tight-list">
+            <li>Send the Metro ARMS User Form (PDF) to the requesting user.</li>
+            <li>Instruct them to complete:
+              <ul class="tight-list">
+                <li>Page 2</li>
+                <li>Pages 6–8</li>
+              </ul>
+            </li>
+            <li>Have the completed form returned to HPD-IT.</li>
+          </ul>
+        </div>
+
+        <div class="step">
+          <div class="step-title">2. Submit Account Request</div>
+          <ul class="tight-list">
+            <li>Rename the PDF to include the user’s last name.</li>
+            <li>Email Dawson Weijers (Dawson.Weijers@nashville.gov).</li>
+          </ul>
+          <div class="code-block code-container" data-language="Text" data-line-numbers="false">
+            <div class="code-header">
+              <span class="code-lang">Text</span>
+              <div class="code-actions">
+                <button class="copy-btn icon-btn" type="button" aria-label="Copy code" onclick="copyCode(this)">
+                  <svg viewBox="0 0 24 24" class="icon-copy" aria-hidden="true">
+                    <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="code-body">
+              <pre><code class="language-text">Subject: Metro ARMS Account Request – [Employee Name]
+
+Body:
+Please create a Metro ARMS account for [Employee Name].
+
+The completed user form is attached.</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-title">3. Receive Account Credentials</div>
+          <ul class="tight-list">
+            <li>Wait for the response email from Dawson.</li>
+            <li>Retrieve:
+              <ul class="tight-list">
+                <li>Username</li>
+                <li>Password</li>
+              </ul>
+            </li>
+            <li>Provide credentials securely to the user.</li>
+          </ul>
+        </div>
+
+        <div class="step">
+          <div class="step-title">4. Install Metro ARMS Software</div>
+          <div class="code-block code-container" data-language="Text" data-line-numbers="false">
+            <div class="code-header">
+              <span class="code-lang">Text</span>
+              <div class="code-actions">
+                <button class="copy-btn icon-btn" type="button" aria-label="Copy code" onclick="copyCode(this)">
+                  <svg viewBox="0 0 24 24" class="icon-copy" aria-hidden="true">
+                    <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="code-body">
+              <pre><code class="language-text">Location:
+Tech\General\Team Drive\MetroRMS
+
+Folder:
+2025 Install</code></pre>
+            </div>
+          </div>
+          <ul class="tight-list">
+            <li>Copy the zipped folder to the local machine.</li>
+            <li>Extract the contents.</li>
+            <li>Follow:
+              <ul class="tight-list">
+                <li>Oracle 11G Documentation</li>
+                <li>RMS v12.8 Installation Guide</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+        <div class="step">
+          <div class="step-title">5. Final Configuration</div>
+          <div class="code-block code-container" data-language="Text" data-line-numbers="false">
+            <div class="code-header">
+              <span class="code-lang">Text</span>
+              <div class="code-actions">
+                <button class="copy-btn icon-btn" type="button" aria-label="Copy code" onclick="copyCode(this)">
+                  <svg viewBox="0 0 24 24" class="icon-copy" aria-hidden="true">
+                    <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="code-body">
+              <pre><code class="language-text">Required Info:
+- Computer FQDN
+- IP Address</code></pre>
+            </div>
+          </div>
+          <ul class="tight-list">
+            <li>Send the system details to Dawson.</li>
+            <li>This allows Metro ARMS access to be enabled.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <script>
+    const copyIcon = `
+      <svg viewBox="0 0 24 24" class="icon-copy" aria-hidden="true">
+        <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+      </svg>`;
+
+    const checkIcon = `
+      <svg viewBox="0 0 24 24" class="icon-check" aria-hidden="true">
+        <path d="M20 6 9 17l-5-5"></path>
+      </svg>`;
+
+    function copyCode(button) {
+      const code = button.closest('.code-block').querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        button.innerHTML = checkIcon;
+        setTimeout(() => {
+          button.innerHTML = copyIcon;
+        }, 1400);
+      });
+    }
+  </script>
+</body>
+</html>
