@@ -91,6 +91,10 @@
         background: #d6d8db;
       }
     </style>
+    <script>
+      window.Prism = window.Prism || {};
+      window.Prism.manual = true;
+    </script>
     <!-- Prism -->
     <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-powershell.min.js"></script>
@@ -150,10 +154,30 @@
         copyText(el.href);
       }
 
-      function copyCode() {
-        const text = document.getElementById("ps-script").innerText;
-        copyText(text);
+      function copyCode(button) {
+        const container = button.closest(".code-container");
+        const codeEl = container ? container.querySelector("code") : null;
+        if (!codeEl) return;
+
+        copyText(codeEl.innerText);
       }
+
+      function renderHtmlCodeBlocks() {
+        const htmlCodeBlocks = document.querySelectorAll(
+          ".code-container code.language-html"
+        );
+
+        htmlCodeBlocks.forEach((codeEl) => {
+          const rawHtml = codeEl.innerHTML;
+          codeEl.textContent = rawHtml;
+        });
+
+        if (window.Prism) {
+          Prism.highlightAll();
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", renderHtmlCodeBlocks);
     </script>
   </head>
   <body class="hold-transition layout-top-nav layout-footer-fixed">
@@ -186,8 +210,8 @@
                       
                       
                       
-                       <div class="code-container"> <button class="copy-btn" onclick="copyCode()">Copy</button>
-                        <pre class="line-numbers"><code id="ps-script" class="language-csharp">Log into <a href="https://www.hvilletn.org/252/Police"
+                       <div class="code-container"> <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre class="line-numbers"><code class="language-html">Log into <a href="https://www.hvilletn.org/252/Police"
 
                           onclick="copyLink(event, this)"> Hendersonville Police
                           Website </a> (This will copy the URL to the
@@ -212,13 +236,13 @@
                       </ul>
                       <li> While still on <strong>HPD-DC01</strong>, run the
                         following PowerShell command: </li>
-                      <div class="code-container"> <button class="copy-btn" onclick="copyCode()">Copy</button>
-                        <pre class="line-numbers"><code id="ps-script" class="language-powershell">Start-ADSyncSyncCycle -PolicyType Delta</code>
+                      <div class="code-container"> <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre class="line-numbers"><code class="language-powershell">Start-ADSyncSyncCycle -PolicyType Delta</code>
                         </pre>
                       </div>
                       <hr>
-                      <div class="code-container"> <button class="copy-btn" onclick="copyCode()">Copy</button>
-                        <pre class="line-numbers"><code id="ps-script" class="language-csharp">Start-ADSyncSyncCycle -PolicyType Delta</code>
+                      <div class="code-container"> <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre class="line-numbers"><code class="language-csharp">Start-ADSyncSyncCycle -PolicyType Delta</code>
                         </pre>
                       </div>
                       <li>Continue with remaining offboarding steps as needed.</li>
