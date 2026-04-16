@@ -1,231 +1,35 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ChatGPT Light UI Replica</title>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
-  <style>
-    :root {
-      --bg: #f7f7f8;
-      --text: #111827;
-      --muted: #6b7280;
-      --border: #e5e7eb;
-      --assistant-bg: #ffffff;
-      --user-bg: #f9fafb;
-      --code-wrap-bg: #f9f9f9;
-      --code-header-bg: #f7f7f8;
-      --code-text: #0f172a;
-    }
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HPDNew User Creation</title>
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- AdminLTE -->
+    <link rel="stylesheet" href="https://adminlte.io/themes/v3/dist/css/adminlte.min.css">
+    <!-- Prism -->
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/plugins/line-numbers/prism-line-numbers.css"
 
-    * {
-      box-sizing: border-box;
-    }
+      rel="stylesheet">
+    <style>
+      pre[class*="language-"] {
+        font-family: Consolas, "Courier New", monospace;
+        font-size: 0.9rem;
+        line-height: 1.4;
+        margin: 0;
+        background: #f4f4f4;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+      }
 
-    body {
-      margin: 0;
-      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
-
-    .page {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 32px 24px 56px;
-    }
-
-    .chat {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .message {
-      border-radius: 14px;
-      padding: 16px 18px;
-    }
-
-    .message.assistant {
-      background: var(--assistant-bg);
-      border: 1px solid var(--border);
-    }
-
-    .message.user {
-      background: var(--user-bg);
-      border: 1px solid #eef0f3;
-    }
-
-    .content {
-      font-size: 15px;
-    }
-
-    .content p {
-      margin: 0 0 12px;
-    }
-
-    .content p:last-child {
-      margin-bottom: 0;
-    }
-
-    .code-block {
-      margin: 14px 0;
-      background: var(--code-wrap-bg);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-
-    .code-header {
-      height: 42px;
-      background: var(--code-header-bg);
-      border-bottom: 1px solid var(--border);
-      padding: 0 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .code-lang {
-      font-size: 12px;
-      letter-spacing: 0.02em;
-      color: #4b5563;
-      font-weight: 600;
-    }
-
-    .code-actions {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .icon-btn {
-      width: 28px;
-      height: 28px;
-      border: none;
-      border-radius: 6px;
-      background: transparent;
-      color: #6b7280;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: background-color 0.15s ease, color 0.15s ease;
-    }
-
-    .icon-btn:hover {
-      background: #eceff3;
-      color: #374151;
-    }
-
-    .icon-btn:focus-visible {
-      outline: 2px solid #9ca3af;
-      outline-offset: 1px;
-    }
-
-    .icon-btn svg {
-      width: 15px;
-      height: 15px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.75;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .code-body {
-      overflow-x: auto;
-    }
-
-    .code-body pre[class*="language-"] {
-      margin: 0;
-      padding: 14px 16px 16px;
-      background: transparent;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 13px;
-      line-height: 1.55;
-      color: var(--code-text);
-      min-width: max-content;
-    }
-
-    .code-body pre[class*="language-"].line-numbers {
-      padding: 14px 16px 16px 3.8em;
-    }
-
-    .line-numbers .line-numbers-rows {
-      border-right: 1px solid #e5e7eb;
-    }
-
-    .line-numbers .line-numbers-rows > span:before {
-      color: #9ca3af;
-    }
-
-    .code-body code {
-      white-space: pre;
-    }
-
-    .table-wrap {
-      overflow-x: auto;
-      margin-top: 12px;
-      position: relative;
-    }
-
-    .table-copy-btn {
-      position: absolute;
-      top: 6px;
-      right: 4px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.15s ease;
-    }
-
-    .table-wrap:hover .table-copy-btn,
-    .table-wrap:focus-within .table-copy-btn {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      border-spacing: 0;
-      font-size: 14px;
-    }
-
-    th,
-    td {
-      text-align: left;
-      padding: 10px 8px;
-      border: none;
-      border-bottom: 1px solid #eceff2;
-      vertical-align: top;
-    }
-
-    th {
-      font-weight: 600;
-      color: #374151;
-      font-size: 13px;
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    .inline-code {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      background: #f3f4f6;
-      border: 1px solid #e5e7eb;
-      border-radius: 5px;
-      font-size: 0.9em;
-      padding: 0.12em 0.35em;
-    }
-
-    .decision-summary {
+          .decision-summary {
       margin: 18px 0 22px;
     }
 
@@ -264,752 +68,183 @@
       font-style: italic;
       letter-spacing: 0.002em;
     }
-
-    .section-divider {
-      border: 0;
-      border-top: 1px solid #d1d5db;
-      margin: 14px 0 16px;
-    }
-
-    .feature-title {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 0 0 8px;
-      font-size: 17px;
-      line-height: 1.35;
-      font-weight: 700;
-      color: #111827;
-    }
-
-    .feature-list {
-      list-style: none;
-      margin: 0;
-      padding: 0 0 0 6px;
-    }
-
-    .feature-list li {
-      position: relative;
-      padding-left: 24px;
-      margin: 4px 0;
-    }
-
-    .feature-list li::before {
-      content: "✔";
-      position: absolute;
-      left: 0;
-      top: 0;
-      color: #7c3aed;
-      font-weight: 700;
-    }
-
-    .step-title {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 0 0 8px;
-      font-size: 17px;
-      line-height: 1.35;
-      font-weight: 700;
-      color: #111827;
-    }
-
-    .muted-text {
-      margin: 0 0 10px;
-      color: #111827;
-    }
-
-    .rollout-title {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin: 0 0 8px;
-      font-size: 17px;
-      line-height: 1.35;
-      font-weight: 700;
-      color: #111827;
-    }
-
-    .number-list {
-      margin: 8px 0 0;
-      padding-left: 22px;
-    }
-
-    .number-list li {
-      margin: 4px 0;
-      padding-left: 2px;
-    }
-
-    .number-list li::marker {
-      font-weight: 700;
-      color: #111827;
-    }
-
-    .method-title {
-      margin: 0 0 10px;
-      font-size: 18px;
-      line-height: 1.35;
-      font-weight: 700;
-      color: #111827;
-    }
-
-    .subhead {
-      margin: 10px 0 6px;
-      font-size: 17px;
-      font-weight: 600;
-      color: #111827;
-    }
-
-    .dense-list {
-      margin: 0 0 8px;
-      padding-left: 28px;
-    }
-
-    .dense-list li {
-      margin: 4px 0;
-      padding-left: 2px;
-    }
-
-    .dense-list li::marker {
-      font-weight: 700;
-    }
-
-    .plain-list {
-      margin: 6px 0 8px;
-      padding-left: 32px;
-    }
-
-    .plain-list li {
-      margin: 3px 0;
-    }
-
-    .single-copy-row {
-      margin-top: 8px;
-      border: 1px solid #e5e7eb;
-      background: #f8f8f8;
-      border-radius: 999px;
-      min-height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 8px 12px 8px 20px;
-    }
-
-    .single-copy-text {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 13px;
-      color: #111827;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .panel-title {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 0 0 8px;
-      font-size: 18px;
-      line-height: 1.35;
-      font-weight: 700;
-      color: #111827;
-    }
-
-    .mini-quote {
-      margin: 6px 0 12px;
-      padding: 2px 0 2px 20px;
-      border-left: 4px solid #cdced1;
-    }
-
-    .mini-quote p {
-      margin: 0;
-      font-size: 15px;
-    }
-
-    .spaced-text {
-      margin: 0 0 10px;
-    }
-
-    .tight-list {
-      margin: 0 0 10px;
-      padding-left: 30px;
-    }
-
-    .tight-list li {
-      margin: 3px 0;
-    }
-
-    .sub-number-title {
-      margin: 0 0 8px;
-      font-size: 17px;
-      line-height: 1.35;
-      font-weight: 700;
-      color: #111827;
-    }
-
-    .copyable-link {
-      color: #2563eb;
-      text-decoration: underline;
-      text-decoration-color: #bfdbfe;
-      text-underline-offset: 2px;
-    }
-
-    .copyable-link:hover {
-      color: #1d4ed8;
-    }
-
-    .chatgpt-toast {
-      position: fixed;
-      left: 50%;
-      bottom: 24px;
-      transform: translateX(-50%);
-      background: #111827;
-      color: #fff;
-      padding: 10px 14px;
-      border-radius: 10px;
-      font-size: 13px;
-      line-height: 1.2;
-      box-shadow: 0 10px 30px rgba(17, 24, 39, 0.28);
-      opacity: 0;
-      transition: opacity 0.2s ease;
-      z-index: 9999;
-      pointer-events: none;
-    }
-  </style>
-</head>
-<body>
-  <main class="page">
-    <section class="chat">
-      <article class="message user">
-        <div class="content">
-          <p>Can you show me a minimal static page plus a PowerShell deploy snippet and a C# endpoint example?</p>
-        </div>
-      </article>
-
-      <article class="message assistant">
-        <div class="content">
-          <p>Absolutely — here are three examples in the same format you’d typically see in ChatGPT.</p>
-
-          <section class="decision-summary">
-            <h1>
-              <span class="heading-icon" aria-hidden="true">🧾</span>
-              <span>One-Sentence Decision Summary (For Change Log / KB)</span>
-            </h1>
-            <blockquote>
-              <p><em>Event Log monitoring on HPD-VMHOST1 was migrated from PRTG “Event Log (Windows API)” sensors to WMI-based sensors due to repeated false RPC errors despite verified functional RPC, WMI, and Event Log access via CLI.</em></p>
-            </blockquote>
-          </section>
-
-          <hr class="section-divider" />
-          <section>
-            <h2 class="feature-title"><span aria-hidden="true">✅</span><span>Why this is the correct solution</span></h2>
-            <ul class="feature-list">
-              <li>Runs as SYSTEM (no access denied)</li>
-              <li>No user interaction required</li>
-              <li>Survives disconnect</li>
-              <li>Reboots safely</li>
-              <li>Deletes itself (no leftover task)</li>
-              <li>Works every time in real environments</li>
-            </ul>
-          </section>
-          <hr class="section-divider" />
-
-          <section>
-            <h2 class="step-title"><span aria-hidden="true">🔎</span><span>Step 2 — Verify it actually started</span></h2>
-            <p class="muted-text">Wait ~30 seconds, then run:</p>
-            <div class="code-block" data-language="PowerShell" data-line-numbers="true">
-              <div class="code-header">
-                <span class="code-lang"></span>
-                <div class="code-actions">
-                  <button class="icon-btn copy-btn" type="button" aria-label="Copy code">
-                    <svg viewBox="0 0 24 24" class="icon-copy" aria-hidden="true">
-                      <rect x="9" y="9" width="13" height="13" rx="2"></rect>
-                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              <div class="code-body code-container">
-                <pre class="language-powershell"><code class="language-powershell">Invoke-Command -ComputerName HPD-SQL01 -ScriptBlock {
-    Get-Process powershell | Where-Object { $_.Path -like "*RunUpdates*" }
-}</code></pre>
-              </div>
-            </div>
-          </section>
-          <hr class="section-divider" />
-
-          <section>
-            <h2 class="rollout-title"><span aria-hidden="true">💡</span><span>If you roll this out further</span></h2>
-            <p class="muted-text">For the next servers, your steps are now:</p>
-            <ol class="number-list">
-              <li>SSH to server</li>
-              <li>Replace <span class="inline-code">/var/prtg/scriptsxml/check_updates.sh</span></li>
-              <li>Test script</li>
-              <li>Scan sensor in PRTG</li>
-              <li>Hide “Pending Updates”</li>
-            </ol>
-          </section>
-          <hr class="section-divider" />
-
-          <section>
-            <h2 class="method-title">Method 1 (Recommended) – Export/Import SSMS Settings</h2>
-            <p class="subhead">On the OLD computer</p>
-            <p class="spaced-text"><a class="copyable-link" href="https://entra.microsoft.com/#view/Microsoft_AAD_AuthenticationMethods/MultifactorAuthenticationConfig.ReactView?Microsoft_AAD_IAM_legacyAADRedirect=true" data-copy-href="true">Per-user multi-factor authentication</a></p>
-            <ol class="dense-list">
-              <li>Open SQL Server Management Studio.</li>
-              <li>Go to Tools → <strong>Import and Export Settings...</strong></li>
-              <li>Select <strong>Export selected environment settings.</strong></li>
-              <li>Click <strong>Next.</strong></li>
-              <li>Choose what to export (you can export <strong>everything</strong> or only certain items).</li>
-            </ol>
-            <p class="muted-text">Most people export:</p>
-            <ul class="plain-list">
-              <li>Environment → General</li>
-              <li>Keyboard</li>
-              <li>Fonts and Colors</li>
-              <li>Query Execution</li>
-              <li>SQL Server Object Explorer</li>
-              <li>Window Layout</li>
-            </ul>
-            <ol class="dense-list" start="6">
-              <li>Save the file.</li>
-            </ol>
-            <p class="muted-text">It will create a file like:</p>
-            <div class="single-copy-row">
-              <span class="single-copy-text" id="ssms-export-file">CurrentSettings.vssettings</span>
-              <button class="icon-btn copy-text-btn" type="button" aria-label="Copy code" data-copy-target="#ssms-export-file">
-                <svg viewBox="0 0 24 24" class="icon-copy" aria-hidden="true">
-                  <rect x="9" y="9" width="13" height="13" rx="2"></rect>
-                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                </svg>
-              </button>
-            </div>
-          </section>
-          <hr class="section-divider" />
-
-          <section>
-            <h2 class="panel-title"><span aria-hidden="true">1️⃣</span><span>Tiles Need Weight (Most Important)</span></h2>
-            <p class="spaced-text">Right now tiles look like:</p>
-            <div class="mini-quote"><p>clickable panels</p></div>
-            <p class="spaced-text">They should feel like:</p>
-            <div class="mini-quote"><p>executable commands</p></div>
-            <h3 class="sub-number-title">Fix (tiny change, huge impact)</h3>
-            <p class="spaced-text">Inside <strong>CommandTile.OnPaint</strong> add a soft shadow.</p>
-            <p class="spaced-text">Add <strong>before</strong> drawing the background:</p>
-            <div class="code-block" data-language="C#" data-line-numbers="true">
-              <div class="code-header">
-                <span class="code-lang"></span>
-                <div class="code-actions">
-                  <button class="icon-btn copy-btn" type="button" aria-label="Copy code">
-                    <svg viewBox="0 0 24 24" class="icon-copy" aria-hidden="true">
-                      <rect x="9" y="9" width="13" height="13" rx="2"></rect>
-                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              <div class="code-body code-container">
-                <pre class="language-csharp"><code class="language-csharp">// shadow
-using var shadow = new SolidBrush(Color.FromArgb(35, 0, 0, 0));
-g.FillRoundedRectangle(shadow, rect.X + 4, rect.Y + 4, rect.Width, rect.Height, 16);</code></pre>
-              </div>
-            </div>
-            <p class="spaced-text">Then keep your normal fill.</p>
-            <p class="spaced-text">This single change makes the UI feel <strong>professional instantly.</strong></p>
-          </section>
-          <hr class="section-divider" />
-
-          <section>
-            <h2 class="panel-title"><span aria-hidden="true">🔎</span><span>Step 1 — Let’s Find Good Test Events</span></h2>
-            <p class="spaced-text">Before testing “other involvement types”, we need to pick smart sample data.</p>
-            <p class="spaced-text">You already tested:</p>
-            <ul class="tight-list">
-              <li>✅ Arrest (JUV / EXP)</li>
-              <li>✅ Multiple offenses</li>
-              <li>✅ Single role</li>
-            </ul>
-            <p class="spaced-text">Now we want:</p>
-            <ol class="dense-list">
-              <li><strong>Criminal but NOT arrest</strong> (SUS, OFF, VIND, etc.)</li>
-              <li><strong>Victim-only event</strong></li>
-              <li><strong>Witness-only event</strong></li>
-              <li><strong>Multi-role person on same event</strong></li>
-            </ol>
-          </section>
-          <hr class="section-divider" />
-
-          <section>
-            <h2 class="panel-title"><span>Why we can say that with confidence</span></h2>
-            <h3 class="sub-number-title">1. Digital signatures lock form field values at signing time</h3>
-            <p class="spaced-text">A PDF digital signature cryptographically seals:</p>
-            <ul class="tight-list">
-              <li>All form field values (including dropdowns like <strong>STEP</strong>)</li>
-              <li>The document byte structure</li>
-            </ul>
-            <p class="spaced-text">If a dropdown value (e.g., Step 5 → Step 7) is <strong>changed after signing</strong>, then <strong>one of two things must happen:</strong></p>
-            <ul class="tight-list">
-              <li>The signature becomes <strong>invalid</strong>, or</li>
-              <li>The document is saved as a new file, breaking the original signature chain</li>
-            </ul>
-            <p class="spaced-text">There is no “silent” post-signature change possible.</p>
-          </section>
-          <hr class="section-divider" />
-
-          <section>
-            <h3 class="sub-number-title">2. Configuration/schema mismatch after update</h3>
-            <p class="spaced-text">Very common when:</p>
-            <ul class="tight-list">
-              <li>The update changes a database schema</li>
-              <li>The migration partially fails</li>
-              <li>One function uses a newer schema than others</li>
-            </ul>
-            <p class="spaced-text">Symptoms:</p>
-            <ul class="tight-list">
-              <li>App launches fine</li>
-              <li>Most functions work</li>
-              <li>One action crashes, hangs, or silently fails</li>
-            </ul>
-            <p class="spaced-text"><strong>📍 How to confirm</strong></p>
-            <ul class="tight-list">
-              <li>Compare config files <strong>before and after reinstall</strong></li>
-              <li>Look for:
-                <ul class="tight-list">
-                  <li>Version numbers</li>
-                  <li>Feature flags</li>
-                  <li>Missing keys</li>
-                  <li>JSON/XML schema differences</li>
-                </ul>
-              </li>
-            </ul>
-          </section>
-          <hr class="section-divider" />
-
-          <div class="code-block" data-language="HTML" data-line-numbers="true">
-            <div class="code-header">
-              <span class="code-lang"></span>
-              <div class="code-actions">
-                <button class="icon-btn copy-btn" type="button" aria-label="Copy code">
-                  <svg viewBox="0 0 24 24" class="icon-copy" aria-hidden="true">
-                    <rect x="9" y="9" width="13" height="13" rx="2"></rect>
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                  </svg>
-                </button>
-              </div>
-            </div>
-            <div class="code-body code-container">
-              <pre class="language-markup"><code class="language-markup"></code></pre>
-              <script class="raw-markup" type="text/plain"><!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hello</title>
-  </head>
-  <body>
-    <main>
-      <h1>Hello, world</h1>
-    </main>
-  </body>
-</html></script>
-            </div>
-          </div>
-
-          <div class="code-block" data-language="PowerShell" data-line-numbers="true">
-            <div class="code-header">
-              <span class="code-lang"></span>
-              <div class="code-actions">
-                <button class="icon-btn copy-btn" type="button" aria-label="Copy code">
-                  <svg viewBox="0 0 24 24" class="icon-copy" aria-hidden="true">
-                    <rect x="9" y="9" width="13" height="13" rx="2"></rect>
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                  </svg>
-                </button>
-              </div>
-            </div>
-            <div class="code-body code-container">
-              <pre class="language-powershell"><code class="language-powershell">$source = "./dist"
-$target = "C:\\inetpub\\wwwroot\\app"
-
-if (-not (Test-Path $target)) {
-    New-Item -ItemType Directory -Path $target | Out-Null
-}
-
-Copy-Item "$source\\*" -Destination $target -Recurse -Force
-Write-Host "Deployment complete."</code></pre>
-            </div>
-          </div>
-
-          <div class="code-block" data-language="C#" data-line-numbers="true">
-            <div class="code-header">
-              <span class="code-lang"></span>
-              <div class="code-actions">
-                <button class="icon-btn copy-btn" type="button" aria-label="Copy code">
-                  <svg viewBox="0 0 24 24" class="icon-copy" aria-hidden="true">
-                    <rect x="9" y="9" width="13" height="13" rx="2"></rect>
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                  </svg>
-                </button>
-              </div>
-            </div>
-            <div class="code-body code-container">
-              <pre class="language-csharp"><code class="language-csharp">app.MapGet("/api/status", () =&gt;
-{
-    return Results.Ok(new
-    {
-        service = "web",
-        status = "healthy",
-        timestamp = DateTimeOffset.UtcNow
-    });
-});</code></pre>
-            </div>
-          </div>
-
-          <div class="code-block" data-language="TEXT" data-line-numbers="true">
-            <div class="code-header">
-              <span class="code-lang"></span>
-              <div class="code-actions">
-                <button class="icon-btn copy-btn" type="button" aria-label="Copy code">
-                  <svg viewBox="0 0 24 24" class="icon-copy" aria-hidden="true">
-                    <rect x="9" y="9" width="13" height="13" rx="2"></rect>
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                  </svg>
-                </button>
-              </div>
-            </div>
-            <div class="code-body code-container">
-              <pre class="language-none"><code class="language-none">APP_NAME=demo-web
-DEPLOY_REGION=us-east
-RELEASE_CHANNEL=stable
-FEATURE_FLAG_X=true</code></pre>
-            </div>
-          </div>
-
-          <p>And here’s a quick comparison table:</p>
-
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Snippet</th>
-                  <th>Purpose</th>
-                  <th>Runtime</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><span class="inline-code">HTML</span></td>
-                  <td>Static page shell</td>
-                  <td>Browser</td>
-                </tr>
-                <tr>
-                  <td><span class="inline-code">PowerShell</span></td>
-                  <td>File copy deploy</td>
-                  <td>Windows host</td>
-                </tr>
-                <tr>
-                  <td><span class="inline-code">C#</span></td>
-                  <td>Health endpoint</td>
-                  <td>.NET</td>
-                </tr>
-                <tr>
-                  <td><span class="inline-code">TEXT</span></td>
-                  <td>Plain configuration lines</td>
-                  <td>No formatting</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </article>
-    </section>
-  </main>
-
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markup.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-powershell.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-csharp.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
-  <script>
-    const copyIcon = `
-      <svg viewBox="0 0 24 24" class="icon-copy" aria-hidden="true">
-        <rect x="9" y="9" width="13" height="13" rx="2"></rect>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-      </svg>`;
-
-    const checkIcon = `
-      <svg viewBox="0 0 24 24" class="icon-check" aria-hidden="true">
-        <path d="M20 6 9 17l-5-5"></path>
-      </svg>`;
-
-    const languageNames = {
-      markup: 'HTML',
-      powershell: 'PowerShell',
-      csharp: 'C#'
-    };
-
-    document.querySelectorAll('.code-block').forEach((block) => {
-      const rawMarkup = block.querySelector('.raw-markup');
-      const codeElement = block.querySelector('code');
-      const langLabel = block.querySelector('.code-lang');
-      const preElement = block.querySelector('pre');
-      if (rawMarkup && codeElement) {
-        codeElement.textContent = rawMarkup.textContent.trim();
+      
+      
+      .code-container {
+        position: relative;
       }
-      if (codeElement) {
-        codeElement.textContent = codeElement.textContent
-          .replace(/^\n+/, '')
-          .replace(/\s+$/, '');
-      }
-      if (preElement) {
-        const wantsLineNumbers = block.dataset.lineNumbers === 'true';
-        preElement.classList.toggle('line-numbers', wantsLineNumbers);
-      }
-      if (codeElement && langLabel) {
-        const explicitLanguage = block.dataset.language ? block.dataset.language.trim() : '';
-        const languageClass = Array.from(codeElement.classList).find((name) => name.startsWith('language-'));
-        const languageKey = languageClass ? languageClass.replace('language-', '') : '';
-        langLabel.textContent = explicitLanguage || languageNames[languageKey] || languageKey;
-      }
-    });
 
-    Prism.highlightAll();
-
-    function showToast(message) {
-      const existing = document.querySelector('.chatgpt-toast');
-      if (existing) existing.remove();
-      const toast = document.createElement('div');
-      toast.className = 'chatgpt-toast';
-      toast.textContent = message;
-      document.body.appendChild(toast);
-      requestAnimationFrame(() => {
-        toast.style.opacity = '1';
-      });
-      setTimeout(() => {
-        toast.style.opacity = '0';
-        setTimeout(() => toast.remove(), 200);
-      }, 1700);
-    }
-
-    async function copyText(text, toastMessage = 'Copied to clipboard') {
-      try {
-        await navigator.clipboard.writeText(text);
-      } catch {
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
+      .copy-btn {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        z-index: 10;
+        background: #e9ecef;
+        border: 1px solid #ccc;
+        padding: 4px 10px;
+        font-size: 12px;
+        border-radius: 4px;
+        cursor: pointer;
       }
-      showToast(toastMessage);
-    }
 
-    document.querySelectorAll('.copy-btn').forEach((button) => {
-      let resetTimer = null;
-      button.addEventListener('click', async () => {
-        const code = button.closest('.code-block').querySelector('code').textContent;
-        try {
-          await copyText(code, 'Code copied');
-          button.innerHTML = checkIcon;
-          if (resetTimer) clearTimeout(resetTimer);
-          resetTimer = setTimeout(() => {
-            button.innerHTML = copyIcon;
-          }, 1500);
-        } catch {
-          button.innerHTML = checkIcon;
-          if (resetTimer) clearTimeout(resetTimer);
-          resetTimer = setTimeout(() => {
-            button.innerHTML = copyIcon;
-          }, 1500);
+      .copy-btn:hover {
+        background: #d6d8db;
+      }
+    </style>
+    <!-- Prism -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-powershell.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script>
+      function showToast(message) {
+        let existing = document.getElementById("chatgpt-toast");
+        if (existing) existing.remove();
+
+        let toast = document.createElement("div");
+        toast.id = "chatgpt-toast";
+        toast.innerText = message;
+
+        toast.style.position = "fixed";
+        toast.style.left = "50%";
+        toast.style.bottom = "24px";
+        toast.style.transform = "translateX(-50%)";
+        toast.style.background = "#1f1f1f";
+        toast.style.color = "#fff";
+        toast.style.padding = "10px 16px";
+        toast.style.borderRadius = "8px";
+        toast.style.fontSize = "14px";
+        toast.style.boxShadow = "0 4px 12px rgba(0,0,0,0.25)";
+        toast.style.opacity = "0";
+        toast.style.transition = "opacity 0.2s ease";
+        toast.style.zIndex = "9999";
+
+        document.body.appendChild(toast);
+
+        requestAnimationFrame(() => {
+          toast.style.opacity = "1";
+        });
+
+        setTimeout(() => {
+          toast.style.opacity = "0";
+          setTimeout(() => toast.remove(), 200);
+        }, 2000);
+      }
+
+      function copyText(text) {
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(text);
+        } else {
+          var textarea = document.createElement("textarea");
+          textarea.value = text;
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand("copy");
+          document.body.removeChild(textarea);
         }
-      });
-    });
 
-    document.querySelectorAll('.copy-text-btn').forEach((button) => {
-      let resetTimer = null;
-      button.addEventListener('click', async () => {
-        const target = button.dataset.copyTarget ? document.querySelector(button.dataset.copyTarget) : null;
-        const text = target ? target.textContent : '';
-        try {
-          await copyText(text, 'Copied to clipboard');
-          button.innerHTML = checkIcon;
-          if (resetTimer) clearTimeout(resetTimer);
-          resetTimer = setTimeout(() => {
-            button.innerHTML = copyIcon;
-          }, 1500);
-        } catch {
-          button.innerHTML = checkIcon;
-          if (resetTimer) clearTimeout(resetTimer);
-          resetTimer = setTimeout(() => {
-            button.innerHTML = copyIcon;
-          }, 1500);
-        }
-      });
-    });
+        showToast("Copied to clipboard");
+      }
 
-    document.querySelectorAll('a[data-copy-href=\"true\"]').forEach((link) => {
-      link.addEventListener('click', async (event) => {
+      function copyLink(event, el) {
         event.preventDefault();
-        await copyText(link.href, 'Link copied');
-      });
-    });
-
-    function cellToMarkdown(cell) {
-      const normalize = (value) => value.trim().replace(/\s+/g, ' ');
-      const escapePipes = (value) => value.replace(/\|/g, '\\|');
-      const link = cell.querySelector('a[href]');
-      let content;
-      if (link) {
-        content = `[${normalize(link.textContent)}](${link.href})`;
-      } else {
-        content = normalize(cell.textContent);
+        copyText(el.href);
       }
-      if (cell.querySelector('strong') && !content.startsWith('**')) {
-        content = `**${content}**`;
+
+      function copyCode() {
+        const text = document.getElementById("ps-script").innerText;
+        copyText(text);
       }
-      return escapePipes(content);
-    }
+    </script>
+  </head>
+  <body class="hold-transition layout-top-nav layout-footer-fixed">
+    <div class="wrapper">
+      <div class="content-wrapper">
+        <div class="content-header">
+          <div class="container">
+            <h1 class="m-0"> How To Title</h1>
+          </div>
+        </div>
+        <div class="content">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card card-light card-outline">
+                  <div class="card-header">
+                    <h5 class="card-title">Actions</h5>
+                  </div>
+                  <div class="card-body">
+                    <p><strong>General Description of Task (Login to
+                        Application)</strong></p>
+                    <ol>
+                      <li>Open the <strong>Application </strong>Website using
+                        the login button at the top of this window.</li>
+                      <li> Log into <a href="https://www.hvilletn.org/252/Police"
 
-    function tableToMarkdown(table) {
-      const rows = Array.from(table.querySelectorAll('tr'));
-      if (!rows.length) return '';
-      const mapped = rows.map((row) => Array.from(row.querySelectorAll('th,td')).map(cellToMarkdown));
-      const header = mapped[0];
-      const columnWidths = header.map((_, columnIndex) =>
-        Math.max(
-          3,
-          ...mapped.map((row) => (row[columnIndex] ? row[columnIndex].length : 0))
-        )
-      );
-      const pad = (value, width) => (value || '').padEnd(width, ' ');
-      const separator = columnWidths.map((width) => '-'.repeat(width));
-      const body = mapped.slice(1);
-      const formatRow = (cells) =>
-        `| ${columnWidths.map((width, index) => pad(cells[index], width)).join(' | ')} |`;
-      return [formatRow(header), formatRow(separator), ...body.map(formatRow)].join('\n');
-    }
+                          onclick="copyLink(event, this)"> Hendersonville Police
+                          Website </a> (This will copy the URL to the
+                        clipboard) </li>
+                      
+                      
+                      
+                       <div class="code-container"> <button class="copy-btn" onclick="copyCode()">Copy</button>
+                        <pre class="line-numbers"><code id="ps-script" class="language-csharp">Log into <a href="https://www.hvilletn.org/252/Police"
 
-    document.querySelectorAll('.table-wrap').forEach((wrap) => {
-      const table = wrap.querySelector('table');
-      if (!table) return;
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'icon-btn table-copy-btn';
-      button.setAttribute('aria-label', 'Copy table');
-      button.innerHTML = copyIcon;
-      let resetTimer = null;
-      button.addEventListener('click', async () => {
-        const text = tableToMarkdown(table);
-        await copyText(text, 'Table copied');
-        button.innerHTML = checkIcon;
-        if (resetTimer) clearTimeout(resetTimer);
-        resetTimer = setTimeout(() => {
-          button.innerHTML = copyIcon;
-        }, 1500);
-      });
-      wrap.appendChild(button);
-    });
-  </script>
-</body>
+                          onclick="copyLink(event, this)"> Hendersonville Police
+                          Website </a> (This will copy the URL to the
+                        clipboard)</code>
+                        </pre>
+                      </div>
+                      
+                      <li> In the search bar, search for the user (<code>{SamAccountName_ToUpper}</code>)
+                      </li>
+                      <li> When the user is located, select the user and click <strong>Disable
+                          MFA</strong>. </li>
+                    </ol>
+                    <p>Change login password for user profile.</p>
+                    <ol>
+                      <li>Login/RDP to <strong>HPD-DC01</strong> or another
+                        Domain Controller.</li>
+                      <li><strong>Open Active Directory Users and Computers</strong></li>
+                      <li>Search for the user (<code>{SamAccountName_ToUpper}</code>)</li>
+                      <li>Right click and select <strong>Reset Password</strong></li>
+                      <ul>
+                        <li>Enter a password you can remember for later steps</li>
+                      </ul>
+                      <li> While still on <strong>HPD-DC01</strong>, run the
+                        following PowerShell command: </li>
+                      <div class="code-container"> <button class="copy-btn" onclick="copyCode()">Copy</button>
+                        <pre class="line-numbers"><code id="ps-script" class="language-powershell">Start-ADSyncSyncCycle -PolicyType Delta</code>
+                        </pre>
+                      </div>
+                      <hr>
+                      <div class="code-container"> <button class="copy-btn" onclick="copyCode()">Copy</button>
+                        <pre class="line-numbers"><code id="ps-script" class="language-csharp">Start-ADSyncSyncCycle -PolicyType Delta</code>
+                        </pre>
+                      </div>
+                      <li>Continue with remaining offboarding steps as needed.</li>
+                    </ol>
+                    <section class="decision-summary">
+                      <h1> <span class="heading-icon" aria-hidden="true">🧾</span>
+                        <span>One-Sentence Decision Summary (For Change Log /
+                          KB)</span> </h1>
+                      <blockquote>
+                        <p><em><strong>Block quote</strong>:</em> This is a <strong>block
+                            quote</strong> inside a decision-summary summary </p>
+                      </blockquote>
+                    </section>
+                    <blockquote>
+                      <p><em><strong>Block quote</strong>:</em> This is a
+                        standard block quote.</p>
+                    </blockquote>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="main-footer"> <strong>Copyright © 2026 <a href="https://www.hvillepd.org">Hendersonville
+            Police</a>. </strong> All rights reserved. </footer>
+    </div>
+  </body>
 </html>
